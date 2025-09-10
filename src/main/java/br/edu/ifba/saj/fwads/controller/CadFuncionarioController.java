@@ -1,6 +1,5 @@
 package br.edu.ifba.saj.fwads.controller;
 
-import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.service.Service;
 import javafx.fxml.FXML;
@@ -20,16 +19,17 @@ public class CadFuncionarioController {
     private TextField txMatricula;
 
      private MasterController masterControllerFinal;
-    private ListarEquipamentoController ListarEquipamentoController;
+    private ListarEquipamentoController ListarFuncionarioController;
 
-    private Service<Equipamento> serviceEquipamento = new Service<>(Equipamento.class);
+    private Service<Funcionario> serviceFuncionario = new Service<>(Funcionario.class);
     
     public void setMasterController(MasterController masterController) {
         this.masterControllerFinal = masterControllerFinal;
     }
 
-    public void setlistarEquipamentoController(ListarEquipamentoController ListarEquipamentoController) {
-        this.ListarEquipamentoController = ListarEquipamentoController;
+    public void setlistarEquipamentoController(ListarEquipamentoController ListarFuncionarioController) {
+        this.ListarFuncionarioController = ListarFuncionarioController;
+    }
 
     @FXML
     private void salvarFuncionario() {
@@ -38,7 +38,7 @@ public class CadFuncionarioController {
                     txMatricula.getText());
         new Alert(AlertType.INFORMATION, 
         "Cadastrando Funcionario: "+novoFuncionario.getNome()).showAndWait();
-        Dados.listaFuncionarios.add(novoFuncionario);
+        serviceFuncionario.create(novoFuncionario);
         limparTela();
     }
     @FXML

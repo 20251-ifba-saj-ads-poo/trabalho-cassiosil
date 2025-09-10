@@ -4,8 +4,8 @@ import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.service.Service;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextField;
 
 
 public class CadEquipamentoController {
@@ -30,6 +30,7 @@ public class CadEquipamentoController {
 
     public void setlistarEquipamentoController(ListarEquipamentoController ListarEquipamentoController) {
         this.ListarEquipamentoController = ListarEquipamentoController;
+    }
 
     @FXML
     private void salvarEquipamento() {
@@ -51,3 +52,5 @@ public class CadEquipamentoController {
     }
 
 }
+
+
