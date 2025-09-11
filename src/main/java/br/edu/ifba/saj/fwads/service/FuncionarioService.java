@@ -4,15 +4,15 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import br.edu.ifba.saj.fwads.exception.LoginInvalidoException;
-import br.edu.ifba.saj.fwads.model.Usuario;
+import br.edu.ifba.saj.fwads.model.Funcionario;
 
-public class UsuarioService extends Service<Usuario> {
+public class FuncionarioService extends Service<Funcionario> {
 
-    public UsuarioService() {
-        super(Usuario.class);
+    public FuncionarioService() {
+        super(Funcionario.class);
     }
 
-    public Usuario validaLogin(String login, String senha) throws LoginInvalidoException {
+    public Funcionario validaLogin(String login, String senha) throws LoginInvalidoException {
         try {
             return findByMap(Map.of("login", login, "senha", senha)).getFirst();
         } catch (NoSuchElementException e) {

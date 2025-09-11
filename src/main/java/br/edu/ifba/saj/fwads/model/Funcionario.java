@@ -7,7 +7,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 @Entity
-public class Funcionario extends AbstractEntity {
+public class Funcionario extends Usuario {
     @Column
     private String nome;
     @Column

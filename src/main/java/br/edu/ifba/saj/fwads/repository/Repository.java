@@ -7,15 +7,13 @@ import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Session;
+
 
 import br.edu.ifba.saj.fwads.model.AbstractEntity;
+import br.edu.ifba.saj.fwads.model.Funcionario;
 
 public class Repository<T extends AbstractEntity> {
 
@@ -33,31 +31,32 @@ public class Repository<T extends AbstractEntity> {
 
     public Repository(Class<T> entityClass) {
         this.entityClass = entityClass;
-        runImport();
+        verificarUsuarioAdmin();
     }
 
-    //executa o import.sql nos casos do hibernate update
-    private void runImport() {
-        try {
-            EntityManager entityManager = sessionFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-
-            String sql = new String(Files.readAllBytes(Paths.get("src/main/resources/import.sql")),
-                    StandardCharsets.UTF_8);
-
-            for (String command : sql.split(";")) {
-                if (!command.trim().isEmpty()) {
-                    entityManager.createNativeQuery(command.trim()).executeUpdate();
-                }
-            }
-
-            entityManager.getTransaction().commit();
-            entityManager.close();
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
-        }
-
+    private void verificarUsuarioAdmin() {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        StringBuilder query = new StringBuilder("Select t from Funcionario t where login=:login and senha=:senha");
+        Query q = entityManager.createQuery(query.toString());
+        q.setParameter("login", "admin");
+        q.setParameter("senha", "admin");
+        List<?> result = q.getResultList();
+        if (result.isEmpty()) {            
+            Funcionario admin = new Funcionario();
+            admin.setNome("Administrador");
+            admin.setCpf("000.000.000-00");
+            admin.setMatricula("admin");
+            admin.setLogin("admin");
+            admin.setEmail("admin@domain.com");
+            admin.setSenha("admin");
+            admin.setPermissao(br.edu.ifba.saj.fwads.model.Permissao.ADM);
+            entityManager.persist(admin);   
+        }  
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
+
 
     public T create(T entity) {
         EntityManager entityManager = sessionFactory.createEntityManager();

@@ -1,14 +1,12 @@
 package br.edu.ifba.saj.fwads.model;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@Entity
+@MappedSuperclass
 public class Usuario extends AbstractEntity {
 
     @Column
