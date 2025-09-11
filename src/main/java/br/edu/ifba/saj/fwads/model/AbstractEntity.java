@@ -15,6 +15,8 @@ public abstract class AbstractEntity {
     @Type(type = "uuid-char")
     private UUID id;
 
+
+
     @Override
     public int hashCode() {
         if (id != null) {

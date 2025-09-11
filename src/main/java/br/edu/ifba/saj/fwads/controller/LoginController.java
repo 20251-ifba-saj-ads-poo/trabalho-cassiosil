@@ -31,7 +31,7 @@ public class LoginController {
         try {
             Usuario usuario = usuarioService.validaLogin(txUsuario.getText(), txSenha.getText());
             App.setRoot("controller/Master.fxml");
-            MasterControllerT controller = (MasterControllerT) App.getController();
+            MasterController controller = (MasterController) App.getController();
             controller.setUsuarioLogado(usuario);
         } catch (LoginInvalidoException e) {
             new Alert(AlertType.ERROR, e.getMessage()).showAndWait();

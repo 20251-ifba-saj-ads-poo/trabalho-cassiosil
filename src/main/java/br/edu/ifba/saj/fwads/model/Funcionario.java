@@ -1,11 +1,27 @@
 package br.edu.ifba.saj.fwads.model;
 
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+@Entity
 public class Funcionario extends AbstractEntity {
+    @Column
     private String nome;
+    @Column
     private String cpf;
+    @Column
     private String matricula;
+    @Column
     private String senha;
+    @Enumerated(EnumType.ORDINAL)
     private Permissao permissao;
+
+    public Funcionario(){
+        
+    }
 
     public Funcionario(String nome, String cpf, String matricula) {
         this.nome = nome;

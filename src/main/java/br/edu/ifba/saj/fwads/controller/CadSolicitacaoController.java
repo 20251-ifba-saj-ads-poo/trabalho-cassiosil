@@ -110,8 +110,8 @@ public class CadSolicitacaoController {
 
     @FXML
     private void limparTela() {
-        slEquipamento.setSelectionModel(null);
-        slFuncionario.setSelectionModel(null);
+        slEquipamento.setValue(null);
+        slFuncionario.setValue(null);
         dtSolicitacao.setValue(null);
         dtDevolucao.setValue(null);
     }

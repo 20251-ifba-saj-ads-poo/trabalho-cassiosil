@@ -2,12 +2,27 @@ package br.edu.ifba.saj.fwads.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
+@Entity
 public class Solicitacao extends AbstractEntity {
+    @ManyToOne
     private Equipamento equipamento;
+    @ManyToOne
     private Funcionario funcionario;
+    @Column
     private LocalDate dataSolicitacao;
+    @Column
     private LocalDate dataDevolucao;
+    @Enumerated(EnumType.ORDINAL)
     private StatusSolicitacao status;
+    public Solicitacao(){
+        
+    }
+
     public Solicitacao(Equipamento equipamento, Funcionario funcionario, LocalDate dataSolicitacao, LocalDate dataDevolucao) {
         this.equipamento = equipamento;
         this.funcionario = funcionario;

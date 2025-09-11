@@ -1,10 +1,24 @@
 package br.edu.ifba.saj.fwads.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+@Entity
 public class Equipamento extends AbstractEntity {
+    @Column
     private String nome;
+    @Column
     private String numeroDeSerie;
+    @Column
     private String localizacao;
+    @Enumerated(EnumType.ORDINAL)
     private Status status;
+
+    public Equipamento(){
+        
+    }
 
     public Equipamento(String nome, String numeroDeSerie, String localizacao) {
         this.nome = nome;

@@ -104,9 +104,6 @@
                 <version>3.8.1</version>
                 <configuration>
                     <release>${maven.compiler.source}</release>
-                    <compilerArgs>
-                        <arg>--enable-preview</arg>
-                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
