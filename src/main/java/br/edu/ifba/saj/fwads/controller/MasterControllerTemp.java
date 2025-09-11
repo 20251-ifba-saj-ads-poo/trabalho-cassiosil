@@ -1,21 +1,38 @@
 package br.edu.ifba.saj.fwads.controller;
 
 import br.edu.ifba.saj.fwads.App;
+import br.edu.ifba.saj.fwads.model.Usuario;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
-public class MasterController {
+public class MasterControllerTemp {
+
+    @FXML
+    private Button menuItemCadAutor;
+
+    @FXML
+    private Button menuItemCadLivro;
+
+    @FXML
+    private Button menuItemHome;
+
+    @FXML
+    private Button menuItemListAutor;
+
+    @FXML
+    private Button menuItemListLivro;
 
     @FXML
     private BorderPane masterPane;
@@ -24,10 +41,17 @@ public class MasterController {
     private VBox menu;
 
     @FXML
-    private Label userNumeroDeSerie;
+    private Label userEmail;
 
     @FXML
     private Circle userPicture;
+
+    private Usuario usuarioLogado;
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+        setEmail(usuarioLogado.getEmail());
+    }
 
     @FXML
     void logOff(MouseEvent event) {
@@ -55,61 +79,56 @@ public class MasterController {
     private void limparBotoes(Object source) {
         menu.getChildren().forEach((node) -> {
             if (node instanceof Button btn) {
-                btn.getStyleClass().clear();
-                btn.getStyleClass().add("btn-menu");
+                node.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), false);
             }
         }
 
         );
         if (source instanceof Button btn) {
-            btn.getStyleClass().clear();
-            btn.getStyleClass().add("btn-menu-selected");
+            btn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
         }
     }
 
     @FXML
-    void showEquipamentos(ActionEvent event) {
+    void showCadAutor(ActionEvent event) {
         limparBotoes(event.getSource());
-        showFXMLFile("CadEquipamento.fxml");
+        CadAutorController controller = (CadAutorController) showFXMLFile("CadAutor.fxml");
+        controller.setMasterController(this);
     }
 
     @FXML
-    void showFuncionarios(ActionEvent event) {
+    void showListAutor(ActionEvent event) {
         limparBotoes(event.getSource());
-        showFXMLFile("CadFuncionario.fxml");
+        showFXMLFile("ListAutor.fxml");
     }
 
     @FXML
-    void showSolicitacoes(ActionEvent event) {
+    void showListLivro(ActionEvent event) {
         limparBotoes(event.getSource());
-        showFXMLFile("CadSolicitacao.fxml");
+        showFXMLFile("ListLivro.fxml");
     }
 
     @FXML
-    void showListarEquipamento(ActionEvent event) {
+    void showCadLivro(ActionEvent event) {
         limparBotoes(event.getSource());
-        showFXMLFile("ListarEquipamento.fxml");                      
-    }
-               
-    @FXML
-    void showListarFuncionario(ActionEvent event) {
-        limparBotoes(event.getSource());
-        showFXMLFile("ListarFuncionario.fxml");  
+        showFXMLFile("CadLivro.fxml");
     }
 
-    @FXML
-    void showListarSolicitacao(ActionEvent event) {
-        limparBotoes(event.getSource());
-        showFXMLFile("ListarSolicitacao.fxml");  
-    }
-
-    private void showFXMLFile(String resourceName) {
-        try {            
-            Pane fxmlCarregado = FXMLLoader.load(getClass().getResource(resourceName));
+    public Object showFXMLFile(String resourceName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(resourceName));
+            Pane fxmlCarregado = loader.load();
             masterPane.setCenter(fxmlCarregado);
+            return loader.getController();
+
         } catch (Exception e) {
             new Alert(AlertType.ERROR, "Erro ao carregar o arquivo " + resourceName).showAndWait();
             e.printStackTrace();
         }
+        return null;
+    }
+
+    private void setEmail(String email) {
+        userEmail.setText(email);
     }
 }

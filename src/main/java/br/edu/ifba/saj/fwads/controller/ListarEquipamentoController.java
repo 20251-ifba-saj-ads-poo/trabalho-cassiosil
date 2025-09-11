@@ -2,9 +2,10 @@
 package br.edu.ifba.saj.fwads.controller;
 
 import br.edu.ifba.saj.fwads.App;
-import br.edu.ifba.saj.fwads.Dados;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Status;
+import br.edu.ifba.saj.fwads.service.Service;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
@@ -33,18 +34,23 @@ public class ListarEquipamentoController {
         columnNumeroDeSerie.setCellValueFactory(new PropertyValueFactory<>("numeroDeSerie"));
         columnLocalizacao.setCellValueFactory(new PropertyValueFactory<>("localizacao"));
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        tblEquipamento.setItems(Dados.listaEquipamentos);
+        loadEquipamentoList();
+    }
+
+    public void loadEquipamentoList() {
+        tblEquipamento.setItems(FXCollections.observableList(new Service(Equipamento.class).findAll()));
     }
 
     @FXML
     public void showNovoEquipamento() {
-
-        Stage stage = new Stage();
-        Scene scene = new Scene(App.loadFXML("controller/CadEquipamento.fxml"), 800, 600);
+        
+        Stage stage = new Stage();            
+        Scene scene = new Scene(App.loadFXML("controller/CadEquipamento.fxml"), 800, 600);            
         stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
-
+        stage.initModality(Modality.APPLICATION_MODAL); 
+        CadEquipamentoController controller = (CadEquipamentoController) App.getController();
+        controller.setListarEquipamentoController(this);
+        stage.showAndWait();            
     }
     
     @FXML

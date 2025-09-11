@@ -3,6 +3,8 @@ package br.edu.ifba.saj.fwads.controller;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Solicitacao;
+import br.edu.ifba.saj.fwads.service.Service;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -26,6 +28,17 @@ public class CadSolicitacaoController {
 
     private DatePicker dtDevolucao;
 
+    private ListarEquipamentoController ListarEquipamentoController;
+    private ListarFuncionarioController ListarFuncionarioController;
+
+
+    private Service<Equipamento> serviceEquipamento = new Service<>(Equipamento.class);
+    private Service<Funcionario> serviceFuncionario = new Service<>(Funcionario.class);
+    private Service<Solicitacao> serviceSolicitacao = new Service<>(Solicitacao.class);
+
+    public void setListarSolicitacaoController(ListarSolicitacaoController ListarSolicitacaoController) {
+        this.ListarSolicitacaoController = ListarSolicitacaoController;
+    }
 
     @FXML
     private void salvarSolicitacao() {
@@ -36,8 +49,11 @@ public class CadSolicitacaoController {
                     
         new Alert(AlertType.INFORMATION,
         "Cadastrando Solicitacao: "+novoSolicitacao.toString()).showAndWait();
-        Dados.listaSolicitacoes.add(novoSolicitacao);
+        serviceSolicitacao.create(novoSolicitacao);
         limparTela();
+        if (ListarSolicitacaoController != null) {
+            ListarSolicitacaoController.loadSolicitacaoList();
+        }
     }
 
     @FXML 
@@ -53,7 +69,7 @@ public class CadSolicitacaoController {
 
             @Override
             public Equipamento fromString(String stringEquipamento) {
-                return Dados.listaEquipamentos
+                return serviceEquipamento.findAll()
                     .stream()
                     .filter(equipamento -> stringEquipamento.equals(equipamento.getNome() + " : " + equipamento.getNumeroDeSerie()))
                     .findAny()
@@ -75,7 +91,7 @@ public class CadSolicitacaoController {
 
             @Override
             public Funcionario fromString(String stringFuncionario) {
-                return Dados.listaFuncionarios
+                return serviceFuncionario.findAll()
                     .stream()
                     .filter(funcionario -> stringFuncionario.equals(funcionario.getNome() + ":" + funcionario.getMatricula()))
                     .findAny()
@@ -87,11 +103,11 @@ public class CadSolicitacaoController {
     }
 
     private void carregarlistaFuncionarios() {
-        slFuncionario.setItems(Dados.listaFuncionarios);
+        slFuncionario.setItems(FXCollections.observableList(serviceFuncionario.findAll()));
     }
 
     private void carregarlistaEquipamentos() {
-        slEquipamento.setItems(Dados.listaEquipamentos);
+        slEquipamento.setItems(FXCollections.observableList(serviceEquipamento.findAll()));
     }
 
     @FXML

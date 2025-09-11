@@ -18,16 +18,16 @@ public class CadFuncionarioController {
     @FXML
     private TextField txMatricula;
 
-     private MasterController masterControllerFinal;
+     private MasterControllerTemp masterController;
     private ListarEquipamentoController ListarFuncionarioController;
 
     private Service<Funcionario> serviceFuncionario = new Service<>(Funcionario.class);
     
-    public void setMasterController(MasterController masterController) {
-        this.masterControllerFinal = masterControllerFinal;
+    public void setMasterController(MasterControllerTemp masterController) {
+        this.masterController = masterController;
     }
 
-    public void setlistarEquipamentoController(ListarEquipamentoController ListarFuncionarioController) {
+    public void setListarFuncionarioController(ListarFuncionarioController ListarFuncionarioController) {
         this.ListarFuncionarioController = ListarFuncionarioController;
     }
 

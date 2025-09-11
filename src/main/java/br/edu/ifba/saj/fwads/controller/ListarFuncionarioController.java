@@ -2,9 +2,10 @@
 package br.edu.ifba.saj.fwads.controller;
 
 import br.edu.ifba.saj.fwads.App;
-import br.edu.ifba.saj.fwads.Dados;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Permissao;
+import br.edu.ifba.saj.fwads.service.Service;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
@@ -33,7 +34,11 @@ public class ListarFuncionarioController {
         columnCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         columnMatricula.setCellValueFactory(new PropertyValueFactory<>("Matricula"));
         columnPermissao.setCellValueFactory(new PropertyValueFactory<>("Permissao"));
-        tblFuncionario.setItems(Dados.listaFuncionarios);
+        loadFuncionarioList();
+    }
+
+    public void loadFuncionarioList() {
+        tblFuncionario.setItems(FXCollections.observableList(new Service(Funcionario.class).findAll()));
     }
 
     @FXML
@@ -45,6 +50,17 @@ public class ListarFuncionarioController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
 
+    }
+    @FXML
+    public void showNovoEquipamento() {
+        
+        Stage stage = new Stage();            
+        Scene scene = new Scene(App.loadFXML("controller/CadEquipamento.fxml"), 800, 600);            
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL); 
+        CadFuncionarioController controller = (CadFuncionarioController) App.getController();
+        controller.setListarFuncionarioController(this);
+        stage.showAndWait();            
     }
 
     @FXML
