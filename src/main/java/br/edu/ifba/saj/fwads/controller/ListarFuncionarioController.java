@@ -26,6 +26,10 @@ public class ListarFuncionarioController {
     @FXML
     private TableColumn<Funcionario, String> columnMatricula;
     @FXML
+    private TableColumn<Funcionario, String> columnEmail;
+    @FXML
+    private TableColumn<Funcionario, String> columnLogin;
+    @FXML
     private TableColumn<Funcionario, Permissao> columnPermissao;
 
     @FXML
@@ -33,6 +37,8 @@ public class ListarFuncionarioController {
         columnNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
         columnCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         columnMatricula.setCellValueFactory(new PropertyValueFactory<>("Matricula"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<>("Login"));
         columnPermissao.setCellValueFactory(new PropertyValueFactory<>("Permissao"));
         loadFuncionarioList();
     }
