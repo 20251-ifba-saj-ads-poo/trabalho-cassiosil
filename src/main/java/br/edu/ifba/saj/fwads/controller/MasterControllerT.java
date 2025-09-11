@@ -2,37 +2,21 @@ package br.edu.ifba.saj.fwads.controller;
 
 import br.edu.ifba.saj.fwads.App;
 import br.edu.ifba.saj.fwads.model.Usuario;
-import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
-public class MasterControllerTemp {
-
-    @FXML
-    private Button menuItemCadAutor;
-
-    @FXML
-    private Button menuItemCadLivro;
-
-    @FXML
-    private Button menuItemHome;
-
-    @FXML
-    private Button menuItemListAutor;
-
-    @FXML
-    private Button menuItemListLivro;
+public class MasterControllerT {
 
     @FXML
     private BorderPane masterPane;
@@ -41,17 +25,11 @@ public class MasterControllerTemp {
     private VBox menu;
 
     @FXML
-    private Label userEmail;
+    private Label userNumeroDeSerie;
 
     @FXML
     private Circle userPicture;
 
-    private Usuario usuarioLogado;
-
-    public void setUsuarioLogado(Usuario usuarioLogado) {
-        this.usuarioLogado = usuarioLogado;
-        setEmail(usuarioLogado.getEmail());
-    }
 
     @FXML
     void logOff(MouseEvent event) {
@@ -79,56 +57,65 @@ public class MasterControllerTemp {
     private void limparBotoes(Object source) {
         menu.getChildren().forEach((node) -> {
             if (node instanceof Button btn) {
-                node.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), false);
+                btn.getStyleClass().clear();
+                btn.getStyleClass().add("btn-menu");
             }
         }
 
         );
         if (source instanceof Button btn) {
-            btn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
+            btn.getStyleClass().clear();
+            btn.getStyleClass().add("btn-menu-selected");
         }
     }
 
     @FXML
-    void showCadAutor(ActionEvent event) {
+    void showEquipamentos(ActionEvent event) {
         limparBotoes(event.getSource());
-        CadAutorController controller = (CadAutorController) showFXMLFile("CadAutor.fxml");
-        controller.setMasterController(this);
+        showFXMLFile("CadEquipamento.fxml");
     }
 
     @FXML
-    void showListAutor(ActionEvent event) {
+    void showFuncionarios(ActionEvent event) {
         limparBotoes(event.getSource());
-        showFXMLFile("ListAutor.fxml");
+        showFXMLFile("CadFuncionario.fxml");
     }
 
     @FXML
-    void showListLivro(ActionEvent event) {
+    void showSolicitacoes(ActionEvent event) {
         limparBotoes(event.getSource());
-        showFXMLFile("ListLivro.fxml");
+        showFXMLFile("CadSolicitacao.fxml");
     }
 
     @FXML
-    void showCadLivro(ActionEvent event) {
+    void showListarEquipamento(ActionEvent event) {
         limparBotoes(event.getSource());
-        showFXMLFile("CadLivro.fxml");
+        showFXMLFile("ListarEquipamento.fxml");                      
+    }
+               
+    @FXML
+    void showListarFuncionario(ActionEvent event) {
+        limparBotoes(event.getSource());
+        showFXMLFile("ListarFuncionario.fxml");  
     }
 
-    public Object showFXMLFile(String resourceName) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(resourceName));
-            Pane fxmlCarregado = loader.load();
+    @FXML
+    void showListarSolicitacao(ActionEvent event) {
+        limparBotoes(event.getSource());
+        showFXMLFile("ListarSolicitacao.fxml");  
+    }
+
+    private void showFXMLFile(String resourceName) {
+        try {            
+            Pane fxmlCarregado = FXMLLoader.load(getClass().getResource(resourceName));
             masterPane.setCenter(fxmlCarregado);
-            return loader.getController();
-
         } catch (Exception e) {
             new Alert(AlertType.ERROR, "Erro ao carregar o arquivo " + resourceName).showAndWait();
             e.printStackTrace();
         }
-        return null;
     }
 
-    private void setEmail(String email) {
-        userEmail.setText(email);
+    void setUsuarioLogado(Usuario usuario) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

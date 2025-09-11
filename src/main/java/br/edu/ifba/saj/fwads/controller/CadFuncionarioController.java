@@ -18,12 +18,12 @@ public class CadFuncionarioController {
     @FXML
     private TextField txMatricula;
 
-     private MasterControllerTemp masterController;
-    private ListarEquipamentoController ListarFuncionarioController;
+     private MasterControllerT masterController;
+    private ListarFuncionarioController ListarFuncionarioController;
 
     private Service<Funcionario> serviceFuncionario = new Service<>(Funcionario.class);
     
-    public void setMasterController(MasterControllerTemp masterController) {
+    public void setMasterController(MasterControllerT masterController) {
         this.masterController = masterController;
     }
 
@@ -47,5 +47,6 @@ public class CadFuncionarioController {
         txCPF.setText("");
         txMatricula.setText("");
     }
+
 
 }

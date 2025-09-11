@@ -1,6 +1,8 @@
 package br.edu.ifba.saj.fwads.controller;
 
 import br.edu.ifba.saj.fwads.App;
+import br.edu.ifba.saj.fwads.model.Usuario;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,16 +20,44 @@ import javafx.scene.shape.Circle;
 public class MasterController {
 
     @FXML
+    private Button menuItemCadEquipamento;
+
+    @FXML
+    private Button menuItemCadFuncionario;
+
+    @FXML
+    private Button menuItemCadSolicitacao;
+
+    @FXML
+    private Button menuItemHome;
+
+    @FXML
+    private Button menuItemListEquipamento;
+
+    @FXML
+    private Button menuItemListFuncionario;
+
+    @FXML
+    private Button menuItemListSolicitacao;
+
+    @FXML
     private BorderPane masterPane;
 
     @FXML
     private VBox menu;
 
     @FXML
-    private Label userNumeroDeSerie;
+    private Label userEmail;
 
     @FXML
     private Circle userPicture;
+
+    private Usuario usuarioLogado;
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+        setEmail(usuarioLogado.getEmail());
+    }
 
     @FXML
     void logOff(MouseEvent event) {
@@ -55,15 +85,13 @@ public class MasterController {
     private void limparBotoes(Object source) {
         menu.getChildren().forEach((node) -> {
             if (node instanceof Button btn) {
-                btn.getStyleClass().clear();
-                btn.getStyleClass().add("btn-menu");
+                node.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), false);
             }
         }
 
         );
         if (source instanceof Button btn) {
-            btn.getStyleClass().clear();
-            btn.getStyleClass().add("btn-menu-selected");
+            btn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
         }
     }
 
@@ -103,13 +131,22 @@ public class MasterController {
         showFXMLFile("ListarSolicitacao.fxml");  
     }
 
-    private void showFXMLFile(String resourceName) {
-        try {            
-            Pane fxmlCarregado = FXMLLoader.load(getClass().getResource(resourceName));
+
+    public Object showFXMLFile(String resourceName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(resourceName));
+            Pane fxmlCarregado = loader.load();
             masterPane.setCenter(fxmlCarregado);
+            return loader.getController();
+
         } catch (Exception e) {
             new Alert(AlertType.ERROR, "Erro ao carregar o arquivo " + resourceName).showAndWait();
             e.printStackTrace();
         }
+        return null;
+    }
+
+    private void setEmail(String email) {
+        userEmail.setText(email);
     }
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="masterPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="main" stylesheets="@assets/style.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.saj.fwads.controller.MasterController">
+<BorderPane fx:id="masterPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="main" stylesheets="@assets/style.css" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.saj.fwads.controller.MasterController">
    <top>
       <AnchorPane prefHeight="100.0" styleClass="top" stylesheets="@assets/style.css" BorderPane.alignment="CENTER">
          <children>
@@ -32,7 +32,7 @@
          </children></AnchorPane>
    </top>
    <left>
-      <VBox fx:id="menu" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="500.0" prefWidth="245.0" styleClass="left" stylesheets="@assets/style.css" BorderPane.alignment="TOP_LEFT">
+      <VBox fx:id="menu" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="500.0" prefWidth="325.0" styleClass="left" stylesheets="@assets/style.css" BorderPane.alignment="TOP_LEFT">
          <children>
             <Button fx:id="menuItemHome" alignment="TOP_LEFT" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showHome" prefHeight="35.0" styleClass="btn-menu-selected" stylesheets="@assets/style.css" text="Home" textFill="WHITE">
                <padding>
@@ -49,7 +49,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="menuItemCadAutor" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showCadAutor" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Cadastro Autores" textFill="WHITE">
+            <Button fx:id="menuItemCadEquipamento" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showEquipamentos" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Cadastro Equipamento" textFill="WHITE">
                <padding>
                   <Insets bottom="5.0" left="10.0" />
                </padding>
@@ -64,7 +64,52 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="menuItemCadLivro" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showCadLivro" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Cadastro Livros" textFill="WHITE">
+            <Button fx:id="menuItemCadFuncionario" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showFuncionarios" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Cadastro Funcionario" textFill="WHITE">
+               <padding>
+                  <Insets bottom="5.0" left="10.0" />
+               </padding>
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/reading-book.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="menuItemCadSolicitacao" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showSolicitacoes" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Cadastro Solicitação" textFill="WHITE">
+               <padding>
+                  <Insets bottom="5.0" left="10.0" />
+               </padding>
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/reading-book.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="menuItemListEquipamento" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showListarEquipamento" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Listar Equipamento" textFill="WHITE">
+               <padding>
+                  <Insets bottom="5.0" left="10.0" />
+               </padding>
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/study.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="menuItemListFuncionario" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showListarFuncionario" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Listar Funcionario" textFill="WHITE">
                <padding>
                   <Insets bottom="5.0" left="10.0" />
                </padding>
@@ -79,22 +124,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="menuItemListAutor" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showListAutor" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Listar Autores" textFill="WHITE">
-               <padding>
-                  <Insets bottom="5.0" left="10.0" />
-               </padding>
-               <font>
-                  <Font size="25.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="150.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/reading-book.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="menuItemListLivro" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showListLivro" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Listar Livros" textFill="WHITE">
+            <Button fx:id="menuItemListSolicitacao" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showListarSolicitacao" prefHeight="35.0" styleClass="btn-menu" stylesheets="@assets/style.css" text="Listar Solicitações" textFill="WHITE">
                <padding>
                   <Insets bottom="5.0" left="10.0" />
                </padding>

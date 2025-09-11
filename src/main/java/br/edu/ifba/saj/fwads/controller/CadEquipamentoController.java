@@ -19,12 +19,12 @@ public class CadEquipamentoController {
     @FXML
     private TextField txlocalizacao;
 
-    private MasterControllerTemp masterControllerFinal;
+    private MasterControllerT masterControllerFinal;
     private ListarEquipamentoController ListarEquipamentoController;
 
     private Service<Equipamento> serviceEquipamento = new Service<>(Equipamento.class);
     
-    public void setMasterController(MasterControllerTemp masterController) {
+    public void setMasterController(MasterControllerT masterController) {
         this.masterControllerFinal = masterControllerFinal;
     }
 

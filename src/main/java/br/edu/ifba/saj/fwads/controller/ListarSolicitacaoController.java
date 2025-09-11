@@ -4,11 +4,12 @@ package br.edu.ifba.saj.fwads.controller;
 import java.time.LocalDate;
 
 import br.edu.ifba.saj.fwads.App;
-import br.edu.ifba.saj.fwads.Dados;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Solicitacao;
 import br.edu.ifba.saj.fwads.model.StatusSolicitacao;
+import br.edu.ifba.saj.fwads.service.Service;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
@@ -39,10 +40,14 @@ public class ListarSolicitacaoController {
         columnDataSolicitacao.setCellValueFactory(new PropertyValueFactory<>("dataSolicitacao"));
         columnDataDevolucao.setCellValueFactory(new PropertyValueFactory<>("dataDevolucao"));
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        tblSolicitacao.setItems(Dados.listaSolicitacoes);
-        
+        loadLivroList();        
     }
 
+    public void loadLivroList(){
+        tblSolicitacao.setItems(FXCollections.observableList(new Service(Solicitacao.class).findAll()));
+    }
+
+    
     @FXML
     public void showNovaSolicitacao() {
 
@@ -50,6 +55,9 @@ public class ListarSolicitacaoController {
         Scene scene = new Scene(App.loadFXML("controller/CadSolicitacao.fxml"), 800, 600);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
+        CadSolicitacaoController controller = (CadSolicitacaoController) App.getController();
+        controller.setListarSolicitacaoController(this);
+
         stage.showAndWait();
 
     }

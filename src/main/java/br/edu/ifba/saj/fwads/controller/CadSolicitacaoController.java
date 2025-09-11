@@ -30,6 +30,7 @@ public class CadSolicitacaoController {
 
     private ListarEquipamentoController ListarEquipamentoController;
     private ListarFuncionarioController ListarFuncionarioController;
+    private ListarSolicitacaoController ListarSolicitacaoController;
 
 
     private Service<Equipamento> serviceEquipamento = new Service<>(Equipamento.class);
@@ -51,9 +52,6 @@ public class CadSolicitacaoController {
         "Cadastrando Solicitacao: "+novoSolicitacao.toString()).showAndWait();
         serviceSolicitacao.create(novoSolicitacao);
         limparTela();
-        if (ListarSolicitacaoController != null) {
-            ListarSolicitacaoController.loadSolicitacaoList();
-        }
     }
 
     @FXML 
