@@ -23,11 +23,14 @@ public class Funcionario extends Usuario {
         
     }
 
-    public Funcionario(String nome, String cpf, String matricula) {
+    public Funcionario(String nome, String cpf, String matricula, String senha, String login, String email) {
         this.nome = nome;
         this.cpf = cpf;
         this.matricula = matricula;
         this.permissao = permissao.USUARIO;
+        this.setSenha(senha);
+        this.setLogin(login);
+        this.setEmail(email);
     }
 
     public String getNome() {

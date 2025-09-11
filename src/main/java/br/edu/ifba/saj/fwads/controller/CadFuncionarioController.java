@@ -18,6 +18,15 @@ public class CadFuncionarioController {
     @FXML
     private TextField txMatricula;
 
+    @FXML
+    private TextField txEmail;
+
+    @FXML
+    private TextField txLogin;
+
+    @FXML
+    private TextField txSenha;
+
      private MasterController masterController;
     private ListarFuncionarioController ListarFuncionarioController;
 
@@ -35,7 +44,10 @@ public class CadFuncionarioController {
     private void salvarFuncionario() {
         Funcionario novoFuncionario = new Funcionario(txNome.getText(),
                     txCPF.getText(), 
-                    txMatricula.getText());
+                    txMatricula.getText(),
+                    txEmail.getText(),
+                    txLogin.getText(),
+                    txSenha.getText());
         new Alert(AlertType.INFORMATION, 
         "Cadastrando Funcionario: "+novoFuncionario.getNome()).showAndWait();
         serviceFuncionario.create(novoFuncionario);
@@ -46,6 +58,9 @@ public class CadFuncionarioController {
         txNome.setText("");
         txCPF.setText("");
         txMatricula.setText("");
+        txEmail.setText("");
+        txLogin.setText("");
+        txSenha.setText("");
     }
 
 

@@ -21,6 +21,7 @@ public class Usuario extends AbstractEntity {
     @Email
     private String email;
 
+    
     public String getLogin() {
         return login;
     }
