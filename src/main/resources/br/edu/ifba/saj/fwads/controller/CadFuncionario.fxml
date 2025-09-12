@@ -20,6 +20,6 @@
       <Label layoutX="14.0" layoutY="226.0" text="Login" />
       <TextField fx:id="txLogin" layoutX="14.0" layoutY="244.0" AnchorPane.leftAnchor="14.4" AnchorPane.rightAnchor="14.400000000000006" />
       <Label layoutX="16.0" layoutY="276.0" text="Senha" />
-      <TextField fx:id="txLogin1" layoutX="14.0" layoutY="294.0" AnchorPane.leftAnchor="14.4" AnchorPane.rightAnchor="14.400000000000006" />
+      <TextField fx:id="txSenha" layoutX="14.0" layoutY="294.0" AnchorPane.leftAnchor="14.4" AnchorPane.rightAnchor="14.400000000000006" />
    </children>
 </AnchorPane>

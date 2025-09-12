@@ -14,8 +14,6 @@ public class Funcionario extends Usuario {
     private String cpf;
     @Column
     private String matricula;
-    @Column
-    private String senha;
     @Enumerated(EnumType.ORDINAL)
     private Permissao permissao;
 
@@ -24,13 +22,16 @@ public class Funcionario extends Usuario {
     }
 
     public Funcionario(String nome, String cpf, String matricula, String senha, String login, String email) {
+        super();
         this.nome = nome;
         this.cpf = cpf;
         this.matricula = matricula;
         this.permissao = permissao.USUARIO;
-        this.setSenha(senha);
-        this.setLogin(login);
-        this.setEmail(email);
+        this.senha = senha;
+        this.login = login;
+        this.email = email;
+
+        
     }
 
     public String getNome() {
@@ -52,13 +53,6 @@ public class Funcionario extends Usuario {
     }
     public void setMatricula(String matricula) {
         this.matricula = matricula;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public Permissao getPermissao() {

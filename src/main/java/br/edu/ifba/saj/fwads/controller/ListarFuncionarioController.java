@@ -37,7 +37,7 @@ public class ListarFuncionarioController {
         columnNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
         columnCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         columnMatricula.setCellValueFactory(new PropertyValueFactory<>("Matricula"));
-        columnEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         columnLogin.setCellValueFactory(new PropertyValueFactory<>("Login"));
         columnPermissao.setCellValueFactory(new PropertyValueFactory<>("Permissao"));
         loadFuncionarioList();

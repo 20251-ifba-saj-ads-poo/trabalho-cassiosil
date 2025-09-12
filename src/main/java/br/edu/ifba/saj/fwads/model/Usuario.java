@@ -10,18 +10,18 @@ import jakarta.validation.constraints.Size;
 public class Usuario extends AbstractEntity {
 
     @Column
-    @NotBlank
-    @Size(min = 5)
-    private String senha;
-    @Column
-    @NotBlank
-    @Size(min = 5)
-    private String login;
-    @Column
     @Email
-    private String email;
-
+    protected String email;
+    @Column
+    @NotBlank
+    @Size(min = 5)
+    protected String login;
+    @Column
+    @NotBlank
+    @Size(min = 5)
+    protected String senha;
     
+   
     public String getLogin() {
         return login;
     }
