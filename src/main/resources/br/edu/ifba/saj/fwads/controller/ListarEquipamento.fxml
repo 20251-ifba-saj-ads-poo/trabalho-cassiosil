@@ -11,10 +11,10 @@
    <center>
       <TableView fx:id="tblEquipamento" editable="true" prefHeight="347.0" prefWidth="489.0">
         <columns>
-          <TableColumn fx:id="columnNome" editable="false" minWidth="-1.0" prefWidth="201.0" text="Nome" />
-          <TableColumn fx:id="columnNumeroDeSerie" editable="false" minWidth="-1.0" prefWidth="173.0" text="Numero de serie" />
-            <TableColumn fx:id="columnLocalizacao" editable="false" minWidth="-1.0" prefWidth="225.0" text="Localização" />
-            <TableColumn fx:id="columnStatus" editable="false" minWidth="-1.0" prefWidth="225.0" text="Status" />
+          <TableColumn fx:id="columnNome" minWidth="-1.0" prefWidth="201.0" text="Nome" />
+          <TableColumn fx:id="columnNumeroDeSerie" minWidth="-1.0" prefWidth="173.0" text="Numero de serie" />
+            <TableColumn fx:id="columnLocalizacao" minWidth="-1.0" prefWidth="225.0" text="Localização" />
+            <TableColumn fx:id="columnStatus" minWidth="-1.0" prefWidth="225.0" text="Status" />
         </columns>
       </TableView>
    </center>

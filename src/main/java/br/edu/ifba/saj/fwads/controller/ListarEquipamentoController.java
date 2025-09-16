@@ -9,8 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
@@ -39,6 +39,7 @@ public class ListarEquipamentoController {
         columnLocalizacao.setCellValueFactory(new PropertyValueFactory<>("localizacao"));
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         loadEquipamentoList();
+        setColumnEdit();
     }
 
     public void loadEquipamentoList() {
@@ -58,15 +59,38 @@ public class ListarEquipamentoController {
     }
     
     public void setColumnEdit(){
+        tblEquipamento.setEditable(true);
         columnNome.setCellFactory(TextFieldTableCell.forTableColumn());
         columnNumeroDeSerie.setCellFactory(TextFieldTableCell.forTableColumn());
         columnLocalizacao.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnStatus.setCellFactory(ComboBoxTableCell.forTableColumn((Status.values())));
+        
+
+        columnNome.setOnEditCommit(event -> {
+            Equipamento equipamento = event.getRowValue();
+            equipamento.setNome(event.getNewValue());
+        });
+
+        columnNumeroDeSerie.setOnEditCommit(event -> {
+            Equipamento equipamento = event.getRowValue();
+            equipamento.setNumeroDeSerie(event.getNewValue());
+        });
+
+        columnLocalizacao.setOnEditCommit(event -> {
+            Equipamento equipamento = event.getRowValue();
+            equipamento.setLocalizacao(event.getNewValue());
+        });
+
+
+        columnStatus.setOnEditCommit(event -> {
+            Equipamento equipamento = event.getRowValue();
+            equipamento.alterarStatus(event.getNewValue());
+        });
+
+        tblEquipamento.refresh();
     }
 
-    colunaNome.setOnEditCommit(event -> {
-            Pessoa pessoa = event.getRowValue();
-            pessoa.setNome(event.getNewValue());
-        });
+    
 
     @FXML
     public void removerEquipamento(MouseEvent event) {
