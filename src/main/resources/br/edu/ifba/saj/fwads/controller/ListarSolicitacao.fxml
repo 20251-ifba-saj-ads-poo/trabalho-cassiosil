@@ -22,6 +22,7 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" styleClass="main" stylesheets="@assets/style.css" BorderPane.alignment="CENTER">
         <buttons>
+            <Button mnemonicParsing="false" onMouseClicked="#removerSolicitacao" styleClass="bottom" stylesheets="@assets/style.css" text="Remover Solicitacao" textFill="WHITE" />
             <Button mnemonicParsing="false" onAction="#showNovaSolicitacao" styleClass="bottom" stylesheets="@assets/style.css" text="Nova Solicitacao" textFill="WHITE" />
         </buttons>
          <padding>

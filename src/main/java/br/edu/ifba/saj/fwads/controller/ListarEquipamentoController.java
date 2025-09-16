@@ -82,6 +82,8 @@ public class ListarEquipamentoController {
         int selectedID = tblEquipamento.getSelectionModel().getSelectedIndex();
         if(selectedID >= 0){
             tblEquipamento.getItems().remove(selectedID);
+            tblEquipamento.refresh();
+
         }
         
     }
