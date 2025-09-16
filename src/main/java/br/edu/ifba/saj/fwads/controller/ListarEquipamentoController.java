@@ -9,11 +9,15 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+
 
 public class ListarEquipamentoController {
     @FXML
@@ -53,6 +57,17 @@ public class ListarEquipamentoController {
         stage.showAndWait();            
     }
     
+    public void setColumnEdit(){
+        columnNome.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnNumeroDeSerie.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnLocalizacao.setCellFactory(TextFieldTableCell.forTableColumn());
+    }
+
+    colunaNome.setOnEditCommit(event -> {
+            Pessoa pessoa = event.getRowValue();
+            pessoa.setNome(event.getNewValue());
+        });
+
     @FXML
     public void removerEquipamento(MouseEvent event) {
         int selectedID = tblEquipamento.getSelectionModel().getSelectedIndex();
