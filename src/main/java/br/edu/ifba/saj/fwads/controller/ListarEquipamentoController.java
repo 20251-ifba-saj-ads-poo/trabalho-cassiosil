@@ -45,18 +45,6 @@ public class ListarEquipamentoController {
     public void loadEquipamentoList() {
         tblEquipamento.setItems(FXCollections.observableList(new Service(Equipamento.class).findAll()));
     }
-
-    @FXML
-    public void showNovoEquipamento() {
-        
-        Stage stage = new Stage();            
-        Scene scene = new Scene(App.loadFXML("controller/CadEquipamento.fxml"), 800, 600);            
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL); 
-        CadEquipamentoController controller = (CadEquipamentoController) App.getController();
-        controller.setListarEquipamentoController(this);
-        stage.showAndWait();            
-    }
     
     public void setColumnEdit(){
         tblEquipamento.setEditable(true);
@@ -81,7 +69,6 @@ public class ListarEquipamentoController {
             equipamento.setLocalizacao(event.getNewValue());
         });
 
-
         columnStatus.setOnEditCommit(event -> {
             Equipamento equipamento = event.getRowValue();
             equipamento.alterarStatus(event.getNewValue());
@@ -90,8 +77,6 @@ public class ListarEquipamentoController {
         tblEquipamento.refresh();
     }
 
-    
-
     @FXML
     public void removerEquipamento(MouseEvent event) {
         int selectedID = tblEquipamento.getSelectionModel().getSelectedIndex();
@@ -99,6 +84,18 @@ public class ListarEquipamentoController {
             tblEquipamento.getItems().remove(selectedID);
         }
         
+    }
+
+    @FXML
+    public void showNovoEquipamento() {
+        
+        Stage stage = new Stage();            
+        Scene scene = new Scene(App.loadFXML("controller/CadEquipamento.fxml"), 800, 600);            
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL); 
+        CadEquipamentoController controller = (CadEquipamentoController) App.getController();
+        controller.setListarEquipamentoController(this);
+        stage.showAndWait();            
     }
 
 }

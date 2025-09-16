@@ -10,7 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -41,10 +43,63 @@ public class ListarFuncionarioController {
         columnLogin.setCellValueFactory(new PropertyValueFactory<>("Login"));
         columnPermissao.setCellValueFactory(new PropertyValueFactory<>("Permissao"));
         loadFuncionarioList();
+        setColumnEdit();
     }
 
     public void loadFuncionarioList() {
         tblFuncionario.setItems(FXCollections.observableList(new Service(Funcionario.class).findAll()));
+    }
+
+    public void setColumnEdit(){
+        tblFuncionario.setEditable(true);
+        columnNome.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnCPF.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnMatricula.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnEmail.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnLogin.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnPermissao.setCellFactory(ComboBoxTableCell.forTableColumn((Permissao.values())));
+        
+
+        columnNome.setOnEditCommit(event -> {
+            Funcionario funcionario = event.getRowValue();
+            funcionario.setNome(event.getNewValue());
+        });
+
+        columnCPF.setOnEditCommit(event -> {
+            Funcionario funcionario = event.getRowValue();
+            funcionario.setCpf(event.getNewValue());
+        });
+
+        columnMatricula.setOnEditCommit(event -> {
+            Funcionario funcionario = event.getRowValue();
+            funcionario.setMatricula(event.getNewValue());
+        });
+
+        columnEmail.setOnEditCommit(event -> {
+            Funcionario funcionario = event.getRowValue();
+            funcionario.setEmail(event.getNewValue());
+        });
+
+        columnLogin.setOnEditCommit(event -> {
+            Funcionario funcionario = event.getRowValue();
+            funcionario.setLogin(event.getNewValue());
+        });
+
+        columnPermissao.setOnEditCommit(event -> {
+            Funcionario funcionario = event.getRowValue();
+            funcionario.setPermissao(event.getNewValue());
+        });
+
+        tblFuncionario.refresh();
+    }
+
+    @FXML
+    public void removerFuncionario(MouseEvent event) {
+        int selectedID = tblFuncionario.getSelectionModel().getSelectedIndex();
+        if(selectedID >= 0){
+            tblFuncionario.getItems().remove(selectedID);
+        }
+        
     }
 
     @FXML
@@ -58,14 +113,4 @@ public class ListarFuncionarioController {
         controller.setListarFuncionarioController(this);
         stage.showAndWait();            
     }
-
-    @FXML
-    public void removerFuncionario(MouseEvent event) {
-        int selectedID = tblFuncionario.getSelectionModel().getSelectedIndex();
-        if(selectedID >= 0){
-            tblFuncionario.getItems().remove(selectedID);
-        }
-        
-    }
-
 }

@@ -9,14 +9,14 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.saj.fwads.controller.ListarFuncionarioController">
    <center>
-      <TableView fx:id="tblFuncionario" prefHeight="347.0" prefWidth="489.0">
+      <TableView fx:id="tblFuncionario" editable="true" prefHeight="347.0" prefWidth="489.0">
         <columns>
-          <TableColumn fx:id="columnNome" editable="false" minWidth="-1.0" prefWidth="201.0" text="Nome" />
-          <TableColumn fx:id="columnCPF" editable="false" minWidth="-1.0" prefWidth="173.0" text="CPF" />
-            <TableColumn fx:id="columnMatricula" editable="false" minWidth="-1.0" prefWidth="225.0" text="Matricula" />
-            <TableColumn fx:id="columnPermissao" editable="false" minWidth="-1.0" prefWidth="225.0" text="Permissao" />
-            <TableColumn fx:id="columnEmail" editable="false" minWidth="-1.0" prefWidth="225.0" text="E-mail" />
-            <TableColumn fx:id="columnLogin" editable="false" minWidth="-1.0" prefWidth="225.0" text="Login" />
+          <TableColumn fx:id="columnNome" minWidth="-1.0" prefWidth="201.0" text="Nome" />
+          <TableColumn fx:id="columnCPF" minWidth="-1.0" prefWidth="173.0" text="CPF" />
+            <TableColumn fx:id="columnMatricula" minWidth="-1.0" prefWidth="225.0" text="Matricula" />
+            <TableColumn fx:id="columnPermissao" minWidth="-1.0" prefWidth="225.0" text="Permissao" />
+            <TableColumn fx:id="columnEmail" minWidth="-1.0" prefWidth="225.0" text="E-mail" />
+            <TableColumn fx:id="columnLogin" minWidth="-1.0" prefWidth="225.0" text="Login" />
         </columns>
       </TableView>
    </center>

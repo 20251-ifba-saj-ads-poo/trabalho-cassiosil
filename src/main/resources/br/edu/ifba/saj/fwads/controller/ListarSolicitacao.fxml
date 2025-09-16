@@ -9,13 +9,13 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.saj.fwads.controller.ListarSolicitacaoController">
    <center>
-      <TableView fx:id="tblSolicitacao" prefHeight="347.0" prefWidth="489.0">
+      <TableView fx:id="tblSolicitacao" editable="true" prefHeight="347.0" prefWidth="489.0">
         <columns>
-          <TableColumn fx:id="columnEquipamento" editable="false" minWidth="-1.0" prefWidth="201.0" text="Equipamento" />
-          <TableColumn fx:id="columnFuncionario" editable="false" minWidth="-1.0" prefWidth="173.0" text="Funcionario" />
-            <TableColumn fx:id="columnDataSolicitacao" editable="false" minWidth="-1.0" prefWidth="225.0" text="Data de solicitacao" />
-            <TableColumn fx:id="columnDataDevolucao" editable="false" minWidth="-1.0" prefWidth="225.0" text="Data de devolução" />
-            <TableColumn fx:id="columnStatus" editable="false" minWidth="-1.0" prefWidth="225.0" text="Status" />
+          <TableColumn fx:id="columnEquipamento" minWidth="-1.0" prefWidth="201.0" text="Equipamento" />
+          <TableColumn fx:id="columnFuncionario" minWidth="-1.0" prefWidth="173.0" text="Funcionario" />
+            <TableColumn fx:id="columnDataSolicitacao" minWidth="-1.0" prefWidth="225.0" text="Data de solicitacao" />
+            <TableColumn fx:id="columnDataDevolucao" minWidth="-1.0" prefWidth="225.0" text="Data de devolução" />
+            <TableColumn fx:id="columnStatus" minWidth="-1.0" prefWidth="225.0" text="Status" />
         </columns>
       </TableView>
    </center>
