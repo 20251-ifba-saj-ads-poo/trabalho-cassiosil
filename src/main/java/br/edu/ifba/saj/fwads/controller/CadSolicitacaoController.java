@@ -1,11 +1,15 @@
 package br.edu.ifba.saj.fwads.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Solicitacao;
 import br.edu.ifba.saj.fwads.model.Status;
 import br.edu.ifba.saj.fwads.service.EquipamentoService;
 import br.edu.ifba.saj.fwads.service.FuncionarioService;
+import br.edu.ifba.saj.fwads.service.Service;
 import br.edu.ifba.saj.fwads.service.SolicitacaoService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -112,7 +116,11 @@ public class CadSolicitacaoController {
     }
 
     private void carregarlistaEquipamentos() {
-        slEquipamento.setItems(FXCollections.observableList(equipamentoService.findAll()));
+        List<Equipamento> todosEquipamentos = new Service(Equipamento.class).findAll();
+        List<Equipamento> filtrados = todosEquipamentos.stream()
+        .filter(e -> e.getStatus() == Status.DISPONIVEL) 
+        .collect(Collectors.toList());
+        slEquipamento.setItems(FXCollections.observableList(filtrados));
     }
     
     public void equipamentoUpdate() {

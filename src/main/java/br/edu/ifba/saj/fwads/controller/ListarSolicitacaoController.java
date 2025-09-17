@@ -2,11 +2,14 @@
 package br.edu.ifba.saj.fwads.controller;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import br.edu.ifba.saj.fwads.App;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Solicitacao;
+import br.edu.ifba.saj.fwads.model.Status;
 import br.edu.ifba.saj.fwads.model.StatusSolicitacao;
 import br.edu.ifba.saj.fwads.service.Service;
 import javafx.collections.FXCollections;
@@ -59,8 +62,13 @@ public class ListarSolicitacaoController {
 
     public void setColumnEdit(){
         tblSolicitacao.setEditable(true);
-        equipamentosDisponiveis = FXCollections.observableList(new Service(Equipamento.class).findAll());
+        List<Equipamento> todosEquipamentos = new Service(Equipamento.class).findAll();
+        List<Equipamento> filtrados = todosEquipamentos.stream()
+        .filter(e -> e.getStatus() == Status.DISPONIVEL) 
+        .collect(Collectors.toList());
+        equipamentosDisponiveis = FXCollections.observableList(filtrados);
         funcionarioDisponiveis = FXCollections.observableArrayList(new Service(Funcionario.class).findAll());
+        
         columnEquipamento.setCellFactory(ComboBoxTableCell.forTableColumn(equipamentosDisponiveis));
         columnFuncionario.setCellFactory(ComboBoxTableCell.forTableColumn(funcionarioDisponiveis));
 
@@ -102,7 +110,7 @@ public class ListarSolicitacaoController {
 
         tblSolicitacao.refresh();
     }
-    
+
     @FXML
     public void removerSolicitacao(MouseEvent event) {
         int selectedID = tblSolicitacao.getSelectionModel().getSelectedIndex();
