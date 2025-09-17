@@ -1,7 +1,8 @@
 package br.edu.ifba.saj.fwads.controller;
 
+import br.edu.ifba.saj.fwads.exception.CadEquipInvalidoException;
 import br.edu.ifba.saj.fwads.model.Equipamento;
-import br.edu.ifba.saj.fwads.service.Service;
+import br.edu.ifba.saj.fwads.service.EquipamentoService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -22,7 +23,7 @@ public class CadEquipamentoController {
     private MasterController masterControllerFinal;
     private ListarEquipamentoController ListarEquipamentoController;
 
-    private Service<Equipamento> serviceEquipamento = new Service<>(Equipamento.class);
+    private EquipamentoService equipamentoService = new EquipamentoService();
     
     public void setMasterController(MasterController masterController) {
         this.masterControllerFinal = masterControllerFinal;
@@ -37,12 +38,15 @@ public class CadEquipamentoController {
         Equipamento novoEquipamento = new Equipamento(txnome.getText(),
                     txnumeroDeSerie.getText(), 
                     txlocalizacao.getText());
-        serviceEquipamento.create(novoEquipamento);
-        new Alert(AlertType.INFORMATION, 
-        "Cadastrando Equipamento: "+novoEquipamento.getNome()).showAndWait();
-        txnome.setText("");
-        txnumeroDeSerie.setText("");
-        txlocalizacao.setText("");;
+        try {
+            equipamentoService.validaCad(novoEquipamento);
+            equipamentoService.create(novoEquipamento);
+            new Alert(AlertType.INFORMATION, 
+            "Cadastrando Equipamento: "+novoEquipamento.getNome()).showAndWait();
+        } catch (CadEquipInvalidoException e) {
+            new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+        }
+        limparTela();
     }
     @FXML
     private void limparTela() {
