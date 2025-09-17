@@ -3,11 +3,11 @@ package br.edu.ifba.saj.fwads.controller;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Solicitacao;
-import br.edu.ifba.saj.fwads.service.Service;
+import br.edu.ifba.saj.fwads.service.EquipamentoService;
+import br.edu.ifba.saj.fwads.service.FuncionarioService;
+import br.edu.ifba.saj.fwads.service.SolicitacaoService;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
@@ -32,10 +32,9 @@ public class CadSolicitacaoController {
     private ListarFuncionarioController ListarFuncionarioController;
     private ListarSolicitacaoController ListarSolicitacaoController;
 
-
-    private Service<Equipamento> serviceEquipamento = new Service<>(Equipamento.class);
-    private Service<Funcionario> serviceFuncionario = new Service<>(Funcionario.class);
-    private Service<Solicitacao> serviceSolicitacao = new Service<>(Solicitacao.class);
+    private EquipamentoService equipamentoService = new EquipamentoService();
+    private FuncionarioService funcionarioService = new FuncionarioService();
+    private SolicitacaoService solicitacaoService = new SolicitacaoService();
 
     public void setListarSolicitacaoController(ListarSolicitacaoController ListarSolicitacaoController) {
         this.ListarSolicitacaoController = ListarSolicitacaoController;
@@ -47,10 +46,14 @@ public class CadSolicitacaoController {
                     slFuncionario.getSelectionModel().getSelectedItem(), 
                     dtSolicitacao.getValue(), 
                     dtDevolucao.getValue());
-                    
-        new Alert(AlertType.INFORMATION,
-        "Cadastrando Solicitacao: "+novoSolicitacao.toString()).showAndWait();
-        serviceSolicitacao.create(novoSolicitacao);
+        try {
+            solicitacaoService.validaCad(novoSolicitacao);
+            solicitacaoService.create(novoSolicitacao);
+            new Alert(AlertType.INFORMATION,
+            "Cadastrando Solicitacao: "+novoSolicitacao.toString()).showAndWait();
+        } catch (Exception e) {
+            new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+        }
         limparTela();
     }
 
@@ -67,7 +70,7 @@ public class CadSolicitacaoController {
 
             @Override
             public Equipamento fromString(String stringEquipamento) {
-                return serviceEquipamento.findAll()
+                return equipamentoService.findAll()
                     .stream()
                     .filter(equipamento -> stringEquipamento.equals(equipamento.getNome() + " : " + equipamento.getNumeroDeSerie()))
                     .findAny()
@@ -89,7 +92,7 @@ public class CadSolicitacaoController {
 
             @Override
             public Funcionario fromString(String stringFuncionario) {
-                return serviceFuncionario.findAll()
+                return funcionarioService.findAll()
                     .stream()
                     .filter(funcionario -> stringFuncionario.equals(funcionario.getNome() + ":" + funcionario.getMatricula()))
                     .findAny()
@@ -101,11 +104,11 @@ public class CadSolicitacaoController {
     }
 
     private void carregarlistaFuncionarios() {
-        slFuncionario.setItems(FXCollections.observableList(serviceFuncionario.findAll()));
+        slFuncionario.setItems(FXCollections.observableList(funcionarioService.findAll()));
     }
 
     private void carregarlistaEquipamentos() {
-        slEquipamento.setItems(FXCollections.observableList(serviceEquipamento.findAll()));
+        slEquipamento.setItems(FXCollections.observableList(equipamentoService.findAll()));
     }
 
     @FXML

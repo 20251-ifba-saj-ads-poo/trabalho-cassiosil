@@ -1,7 +1,7 @@
 package br.edu.ifba.saj.fwads.controller;
 
 import br.edu.ifba.saj.fwads.model.Funcionario;
-import br.edu.ifba.saj.fwads.service.Service;
+import br.edu.ifba.saj.fwads.service.FuncionarioService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -30,7 +30,7 @@ public class CadFuncionarioController {
     private MasterController masterController;
     private ListarFuncionarioController ListarFuncionarioController;
 
-    private Service<Funcionario> serviceFuncionario = new Service<>(Funcionario.class);
+    private FuncionarioService funcionarioService = new FuncionarioService();
     
     public void setMasterController(MasterController masterController) {
         this.masterController = masterController;
@@ -48,9 +48,16 @@ public class CadFuncionarioController {
                     txEmail.getText(),
                     txLogin.getText(),
                     txSenha.getText());
-        new Alert(AlertType.INFORMATION, 
-        "Cadastrando Funcionario: "+novoFuncionario.getNome()).showAndWait();
-        serviceFuncionario.create(novoFuncionario);
+        try {
+            funcionarioService.validaCad(novoFuncionario);
+            funcionarioService.create(novoFuncionario);
+            new Alert(AlertType.INFORMATION, 
+            "Cadastrando Funcionario: "+novoFuncionario.getNome()).showAndWait();
+        } catch (Exception e) {
+            new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+        }
+        
+        
         limparTela();
     }
     @FXML
