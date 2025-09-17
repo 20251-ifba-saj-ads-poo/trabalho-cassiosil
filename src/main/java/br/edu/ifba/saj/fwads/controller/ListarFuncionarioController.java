@@ -34,6 +34,8 @@ public class ListarFuncionarioController {
     @FXML
     private TableColumn<Funcionario, Permissao> columnPermissao;
 
+    private Service<Funcionario> funcionarioService = new Service<>(Funcionario.class);
+
     @FXML
     public void initialize() {
         columnNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
@@ -63,31 +65,37 @@ public class ListarFuncionarioController {
         columnNome.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setNome(event.getNewValue());
+            funcionarioService.update(funcionario);
         });
 
         columnCPF.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setCpf(event.getNewValue());
+            funcionarioService.update(funcionario);
         });
 
         columnMatricula.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setMatricula(event.getNewValue());
+            funcionarioService.update(funcionario);
         });
 
         columnEmail.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setEmail(event.getNewValue());
+            funcionarioService.update(funcionario);
         });
 
         columnLogin.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setLogin(event.getNewValue());
+            funcionarioService.update(funcionario);
         });
 
         columnPermissao.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setPermissao(event.getNewValue());
+            funcionarioService.update(funcionario);
         });
 
         tblFuncionario.refresh();
@@ -96,10 +104,11 @@ public class ListarFuncionarioController {
     @FXML
     public void removerFuncionario(MouseEvent event) {
         int selectedID = tblFuncionario.getSelectionModel().getSelectedIndex();
+        Funcionario funcionario = tblFuncionario.getItems().get(selectedID);
         if(selectedID >= 0){
             tblFuncionario.getItems().remove(selectedID);
+            funcionarioService.delete(funcionario);
         }
-        
     }
 
     @FXML
@@ -111,6 +120,6 @@ public class ListarFuncionarioController {
         stage.initModality(Modality.APPLICATION_MODAL); 
         CadFuncionarioController controller = (CadFuncionarioController) App.getController();
         controller.setListarFuncionarioController(this);
-        stage.showAndWait();            
+        stage.showAndWait();
     }
 }

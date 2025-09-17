@@ -32,6 +32,8 @@ public class ListarEquipamentoController {
     @FXML
     private TableColumn<Equipamento, Status> columnStatus;
 
+    private Service<Equipamento> equipamentoService = new Service<>(Equipamento.class);
+
     @FXML
     public void initialize() {
         columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -57,21 +59,25 @@ public class ListarEquipamentoController {
         columnNome.setOnEditCommit(event -> {
             Equipamento equipamento = event.getRowValue();
             equipamento.setNome(event.getNewValue());
+            equipamentoService.update(equipamento);
         });
 
         columnNumeroDeSerie.setOnEditCommit(event -> {
             Equipamento equipamento = event.getRowValue();
             equipamento.setNumeroDeSerie(event.getNewValue());
+            equipamentoService.update(equipamento);
         });
 
         columnLocalizacao.setOnEditCommit(event -> {
             Equipamento equipamento = event.getRowValue();
             equipamento.setLocalizacao(event.getNewValue());
+            equipamentoService.update(equipamento);
         });
 
         columnStatus.setOnEditCommit(event -> {
             Equipamento equipamento = event.getRowValue();
             equipamento.alterarStatus(event.getNewValue());
+            equipamentoService.update(equipamento);
         });
 
         tblEquipamento.refresh();
@@ -80,12 +86,11 @@ public class ListarEquipamentoController {
     @FXML
     public void removerEquipamento(MouseEvent event) {
         int selectedID = tblEquipamento.getSelectionModel().getSelectedIndex();
+        Equipamento equipamento = tblEquipamento.getItems().get(selectedID);
         if(selectedID >= 0){
             tblEquipamento.getItems().remove(selectedID);
-            tblEquipamento.refresh();
-
+            equipamentoService.delete(equipamento);
         }
-        
     }
 
     @FXML

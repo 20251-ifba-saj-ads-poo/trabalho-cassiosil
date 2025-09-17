@@ -27,7 +27,7 @@ public class CadFuncionarioController {
     @FXML
     private TextField txSenha;
 
-     private MasterController masterController;
+    private MasterController masterController;
     private ListarFuncionarioController ListarFuncionarioController;
 
     private Service<Funcionario> serviceFuncionario = new Service<>(Funcionario.class);
