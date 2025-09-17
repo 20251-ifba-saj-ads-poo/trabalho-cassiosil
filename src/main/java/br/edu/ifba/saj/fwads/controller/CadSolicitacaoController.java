@@ -3,6 +3,7 @@ package br.edu.ifba.saj.fwads.controller;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Solicitacao;
+import br.edu.ifba.saj.fwads.model.Status;
 import br.edu.ifba.saj.fwads.service.EquipamentoService;
 import br.edu.ifba.saj.fwads.service.FuncionarioService;
 import br.edu.ifba.saj.fwads.service.SolicitacaoService;
@@ -12,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
 public class CadSolicitacaoController {
@@ -49,12 +51,14 @@ public class CadSolicitacaoController {
         try {
             solicitacaoService.validaCad(novoSolicitacao);
             solicitacaoService.create(novoSolicitacao);
+            equipamentoUpdate();
             new Alert(AlertType.INFORMATION,
             "Cadastrando Solicitacao: "+novoSolicitacao.toString()).showAndWait();
         } catch (Exception e) {
             new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
         }
         limparTela();
+        
     }
 
     @FXML 
@@ -109,6 +113,13 @@ public class CadSolicitacaoController {
 
     private void carregarlistaEquipamentos() {
         slEquipamento.setItems(FXCollections.observableList(equipamentoService.findAll()));
+    }
+    
+    public void equipamentoUpdate() {
+        int selectedID = slEquipamento.getSelectionModel().getSelectedIndex();
+        Equipamento equipamento = slEquipamento.getItems().get(selectedID);
+        equipamento.alterarStatus(Status.EMUSO);
+        equipamentoService.update(equipamento);
     }
 
     @FXML
