@@ -36,9 +36,10 @@ public class ListarSolicitacaoController {
     @FXML
     private TableColumn<Solicitacao, StatusSolicitacao> columnStatus;
 
-    private ObservableList<Equipamento> equipamentosDisponiveis = FXCollections.observableList(new Service(Equipamento.class).findAll());
-    private ObservableList<Funcionario> funcionarioDisponiveis = FXCollections.observableArrayList(new Service(Funcionario.class).findAll());
+    private ObservableList<Equipamento> equipamentosDisponiveis;
+    private ObservableList<Funcionario> funcionarioDisponiveis;
 
+    private Service<Solicitacao> solicitacaoService = new Service<>(Solicitacao.class);
 
     @FXML
     public void initialize() {
@@ -58,6 +59,8 @@ public class ListarSolicitacaoController {
 
     public void setColumnEdit(){
         tblSolicitacao.setEditable(true);
+        equipamentosDisponiveis = FXCollections.observableList(new Service(Equipamento.class).findAll());
+        funcionarioDisponiveis = FXCollections.observableArrayList(new Service(Funcionario.class).findAll());
         columnEquipamento.setCellFactory(ComboBoxTableCell.forTableColumn(equipamentosDisponiveis));
         columnFuncionario.setCellFactory(ComboBoxTableCell.forTableColumn(funcionarioDisponiveis));
 
@@ -70,26 +73,31 @@ public class ListarSolicitacaoController {
         columnEquipamento.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setEquipamento(event.getNewValue());
+            solicitacaoService.update(solicitacao);
         });
 
         columnFuncionario.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setFuncionario(event.getNewValue());
+            solicitacaoService.update(solicitacao);
         });
 
         columnDataSolicitacao.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setDataSolicitacao(event.getNewValue());
+            solicitacaoService.update(solicitacao);
         });
 
         columnDataDevolucao.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setDataDevolucao(event.getNewValue());
+            solicitacaoService.update(solicitacao);
         });
 
         columnStatus.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setStatus(event.getNewValue());
+            solicitacaoService.update(solicitacao);
         });
 
         tblSolicitacao.refresh();
@@ -98,9 +106,10 @@ public class ListarSolicitacaoController {
     @FXML
     public void removerSolicitacao(MouseEvent event) {
         int selectedID = tblSolicitacao.getSelectionModel().getSelectedIndex();
+        Solicitacao solicitacao = tblSolicitacao.getItems().get(selectedID);
         if(selectedID >= 0){
             tblSolicitacao.getItems().remove(selectedID);
-            tblSolicitacao.refresh();
+            solicitacaoService.delete(solicitacao);
         }
         
     }
