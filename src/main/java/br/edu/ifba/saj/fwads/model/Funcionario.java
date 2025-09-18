@@ -64,7 +64,7 @@ public class Funcionario extends Usuario {
 
     @Override
     public String toString() {
-        return "Funcionario [nome = " + nome + ", CPF = " + cpf +
+        return super.toString()+"Funcionario [nome = " + nome + ", CPF = " + cpf +
          ", matricula = " + matricula + 
          ", permissao = " + permissao + "]";
     }

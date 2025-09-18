@@ -45,9 +45,9 @@ public class CadFuncionarioController {
         Funcionario novoFuncionario = new Funcionario(txNome.getText(),
                     txCPF.getText(), 
                     txMatricula.getText(),
-                    txEmail.getText(),
+                    txSenha.getText(),
                     txLogin.getText(),
-                    txSenha.getText());
+                    txEmail.getText());
         try {
             funcionarioService.validaCad(novoFuncionario);
             funcionarioService.create(novoFuncionario);

@@ -31,31 +31,32 @@ public class ListarFuncionarioController {
     @FXML
     private TableColumn<Funcionario, String> columnMatricula;
     @FXML
+    private TableColumn<Funcionario, Permissao> columnPermissao;
+    @FXML
     private TableColumn<Funcionario, String> columnEmail;
     @FXML
     private TableColumn<Funcionario, String> columnLogin;
-    @FXML
-    private TableColumn<Funcionario, Permissao> columnPermissao;
 
     private Service<Funcionario> funcionarioService = new Service<>(Funcionario.class);
 
     @FXML
     public void initialize() {
-        columnNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+        columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         columnCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-        columnMatricula.setCellValueFactory(new PropertyValueFactory<>("Matricula"));
+        columnMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        columnPermissao.setCellValueFactory(new PropertyValueFactory<>("permissao"));
         columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        columnLogin.setCellValueFactory(new PropertyValueFactory<>("Login"));
-        columnPermissao.setCellValueFactory(new PropertyValueFactory<>("Permissao"));
+        columnLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
         loadFuncionarioList();
         setColumnEdit();
+        //new Alert(AlertType.INFORMATION, funcionarioService.findAll().toString()).showAndWait();
     }
 
     public void loadFuncionarioList() {
         tblFuncionario.setItems(FXCollections.observableList(new Service(Funcionario.class).findAll()));
     }
 
-    public void setColumnEdit(){
+    public void setColumnEdit() {
         tblFuncionario.setEditable(true);
         columnNome.setCellFactory(TextFieldTableCell.forTableColumn());
         columnCPF.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -63,12 +64,11 @@ public class ListarFuncionarioController {
         columnEmail.setCellFactory(TextFieldTableCell.forTableColumn());
         columnLogin.setCellFactory(TextFieldTableCell.forTableColumn());
         columnPermissao.setCellFactory(ComboBoxTableCell.forTableColumn((Permissao.values())));
-        
 
         columnNome.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setNome(event.getNewValue());
-                        try {
+            try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
@@ -79,7 +79,7 @@ public class ListarFuncionarioController {
         columnCPF.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setCpf(event.getNewValue());
-                        try {
+            try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
@@ -90,7 +90,7 @@ public class ListarFuncionarioController {
         columnMatricula.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setMatricula(event.getNewValue());
-                        try {
+            try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
@@ -101,7 +101,7 @@ public class ListarFuncionarioController {
         columnEmail.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setEmail(event.getNewValue());
-                        try {
+            try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
@@ -117,13 +117,13 @@ public class ListarFuncionarioController {
             } catch (ValidationException e) {
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
-            
+
         });
 
         columnPermissao.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setPermissao(event.getNewValue());
-                        try {
+            try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
@@ -138,7 +138,7 @@ public class ListarFuncionarioController {
     public void removerFuncionario(MouseEvent event) {
         int selectedID = tblFuncionario.getSelectionModel().getSelectedIndex();
         Funcionario funcionario = tblFuncionario.getItems().get(selectedID);
-        if(selectedID >= 0){
+        if (selectedID >= 0) {
             tblFuncionario.getItems().remove(selectedID);
             funcionarioService.delete(funcionario);
         }
@@ -146,11 +146,11 @@ public class ListarFuncionarioController {
 
     @FXML
     public void showNovoFuncionario() {
-        
-        Stage stage = new Stage();            
-        Scene scene = new Scene(App.loadFXML("controller/CadFuncionario.fxml"), 800, 600);            
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(App.loadFXML("controller/CadFuncionario.fxml"), 800, 600);
         stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL); 
+        stage.initModality(Modality.APPLICATION_MODAL);
         CadFuncionarioController controller = (CadFuncionarioController) App.getController();
         controller.setListarFuncionarioController(this);
         stage.showAndWait();
