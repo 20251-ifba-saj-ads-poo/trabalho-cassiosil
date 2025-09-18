@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.edu.ifba.saj.fwads.App;
+import br.edu.ifba.saj.fwads.exception.ValidationException;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Solicitacao;
@@ -16,6 +17,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -81,31 +84,53 @@ public class ListarSolicitacaoController {
         columnEquipamento.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setEquipamento(event.getNewValue());
-            solicitacaoService.update(solicitacao);
+            try {
+                solicitacaoService.update(solicitacao);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
+            
         });
 
         columnFuncionario.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setFuncionario(event.getNewValue());
-            solicitacaoService.update(solicitacao);
+            try {
+                solicitacaoService.update(solicitacao);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
         });
 
         columnDataSolicitacao.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setDataSolicitacao(event.getNewValue());
-            solicitacaoService.update(solicitacao);
+            try {
+                solicitacaoService.update(solicitacao);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
         });
 
         columnDataDevolucao.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setDataDevolucao(event.getNewValue());
-            solicitacaoService.update(solicitacao);
+            try {
+                solicitacaoService.update(solicitacao);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
         });
 
         columnStatus.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
             solicitacao.setStatus(event.getNewValue());
-            solicitacaoService.update(solicitacao);
+            try {
+                solicitacaoService.update(solicitacao);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
+
         });
 
         tblSolicitacao.refresh();

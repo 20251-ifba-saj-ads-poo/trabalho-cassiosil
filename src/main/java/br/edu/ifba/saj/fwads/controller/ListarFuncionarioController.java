@@ -2,12 +2,15 @@
 package br.edu.ifba.saj.fwads.controller;
 
 import br.edu.ifba.saj.fwads.App;
+import br.edu.ifba.saj.fwads.exception.ValidationException;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Permissao;
 import br.edu.ifba.saj.fwads.service.Service;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -65,37 +68,67 @@ public class ListarFuncionarioController {
         columnNome.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setNome(event.getNewValue());
-            funcionarioService.update(funcionario);
+                        try {
+                funcionarioService.update(funcionario);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
+
         });
 
         columnCPF.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setCpf(event.getNewValue());
-            funcionarioService.update(funcionario);
+                        try {
+                funcionarioService.update(funcionario);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
+
         });
 
         columnMatricula.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setMatricula(event.getNewValue());
-            funcionarioService.update(funcionario);
+                        try {
+                funcionarioService.update(funcionario);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
+
         });
 
         columnEmail.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setEmail(event.getNewValue());
-            funcionarioService.update(funcionario);
+                        try {
+                funcionarioService.update(funcionario);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
+
         });
 
         columnLogin.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setLogin(event.getNewValue());
-            funcionarioService.update(funcionario);
+            try {
+                funcionarioService.update(funcionario);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
+            
         });
 
         columnPermissao.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
             funcionario.setPermissao(event.getNewValue());
-            funcionarioService.update(funcionario);
+                        try {
+                funcionarioService.update(funcionario);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
+
         });
 
         tblFuncionario.refresh();

@@ -3,6 +3,7 @@ package br.edu.ifba.saj.fwads.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.edu.ifba.saj.fwads.exception.ValidationException;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Solicitacao;
@@ -127,7 +128,11 @@ public class CadSolicitacaoController {
         int selectedID = slEquipamento.getSelectionModel().getSelectedIndex();
         Equipamento equipamento = slEquipamento.getItems().get(selectedID);
         equipamento.alterarStatus(Status.EMUSO);
-        equipamentoService.update(equipamento);
+        try {
+                equipamentoService.update(equipamento);
+            } catch (ValidationException e) {
+                new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
+            }
     }
 
     @FXML

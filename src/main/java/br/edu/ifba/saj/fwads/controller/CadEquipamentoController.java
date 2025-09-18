@@ -1,6 +1,7 @@
 package br.edu.ifba.saj.fwads.controller;
 
 import br.edu.ifba.saj.fwads.exception.CadEquipamentoInvalidoException;
+import br.edu.ifba.saj.fwads.exception.ValidationException;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.service.EquipamentoService;
 import javafx.fxml.FXML;
@@ -38,12 +39,11 @@ public class CadEquipamentoController {
         Equipamento novoEquipamento = new Equipamento(txnome.getText(),
                     txnumeroDeSerie.getText(), 
                     txlocalizacao.getText());
-        try {
-            equipamentoService.validaCad(novoEquipamento);
+        try {            
             equipamentoService.create(novoEquipamento);
             new Alert(AlertType.INFORMATION, 
             "Cadastrando Equipamento: "+novoEquipamento.getNome()).showAndWait();
-        } catch (CadEquipamentoInvalidoException e) {
+        } catch (ValidationException e) {
             new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
         }
         limparTela();

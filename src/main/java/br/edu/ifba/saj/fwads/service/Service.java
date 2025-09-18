@@ -1,12 +1,13 @@
 package br.edu.ifba.saj.fwads.service;
 
+import br.edu.ifba.saj.fwads.exception.ValidationException;
 import br.edu.ifba.saj.fwads.model.AbstractEntity;
 import br.edu.ifba.saj.fwads.repository.Repository;
 
 import java.util.List;
 import java.util.Map;
 
-public class Service<T extends AbstractEntity> {
+public  class Service<T extends AbstractEntity> {
 
     private Repository<T> repository;
 
@@ -25,7 +26,8 @@ public class Service<T extends AbstractEntity> {
         return repository.findByMap(param);
     }
 
-    public T create(T entity) {
+    public T create(T entity) throws ValidationException {
+        validation(entity);
         return repository.create(entity);
     }
 
@@ -33,8 +35,13 @@ public class Service<T extends AbstractEntity> {
         return repository.read(entity);
     }
 
-    public T update(T entity) {
+    public T update(T entity) throws ValidationException {
+        validation(entity);
         return repository.update(entity);
+    }
+
+    protected void validation(T entity) throws ValidationException {
+        
     }
 
     public void delete(T entity) {
