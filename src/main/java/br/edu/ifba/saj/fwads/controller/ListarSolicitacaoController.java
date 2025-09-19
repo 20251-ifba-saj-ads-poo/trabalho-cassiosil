@@ -12,7 +12,9 @@ import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Solicitacao;
 import br.edu.ifba.saj.fwads.model.Status;
 import br.edu.ifba.saj.fwads.model.StatusSolicitacao;
-import br.edu.ifba.saj.fwads.service.Service;
+import br.edu.ifba.saj.fwads.service.EquipamentoService;
+import br.edu.ifba.saj.fwads.service.FuncionarioService;
+import br.edu.ifba.saj.fwads.service.SolicitacaoService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -43,9 +45,9 @@ public class ListarSolicitacaoController {
     private TableColumn<Solicitacao, StatusSolicitacao> columnStatus;
 
     private ObservableList<Equipamento> equipamentosDisponiveis;
-    private ObservableList<Funcionario> funcionarioDisponiveis;
+    private ObservableList<Funcionario> funcionariosDisponiveis;
 
-    private Service<Solicitacao> solicitacaoService = new Service<>(Solicitacao.class);
+    private SolicitacaoService solicitacaoService = new SolicitacaoService();
 
     @FXML
     public void initialize() {
@@ -59,21 +61,21 @@ public class ListarSolicitacaoController {
     }
 
     public void loadSolicitacaoList(){
-        tblSolicitacao.setItems(FXCollections.observableList(new Service(Solicitacao.class).findAll()));
+        tblSolicitacao.setItems(FXCollections.observableList(new SolicitacaoService().findAll()));
         
     }
 
     public void setColumnEdit(){
         tblSolicitacao.setEditable(true);
-        List<Equipamento> todosEquipamentos = new Service(Equipamento.class).findAll();
+        List<Equipamento> todosEquipamentos = new EquipamentoService().findAll();
         List<Equipamento> filtrados = todosEquipamentos.stream()
         .filter(e -> e.getStatus() == Status.DISPONIVEL) 
         .collect(Collectors.toList());
         equipamentosDisponiveis = FXCollections.observableList(filtrados);
-        funcionarioDisponiveis = FXCollections.observableArrayList(new Service(Funcionario.class).findAll());
+        funcionariosDisponiveis = FXCollections.observableArrayList(new FuncionarioService().findAll());
         
         columnEquipamento.setCellFactory(ComboBoxTableCell.forTableColumn(equipamentosDisponiveis));
-        columnFuncionario.setCellFactory(ComboBoxTableCell.forTableColumn(funcionarioDisponiveis));
+        columnFuncionario.setCellFactory(ComboBoxTableCell.forTableColumn(funcionariosDisponiveis));
 
         //columnDataSolicitacao.setCellFactory(DatePickerTableCell.forTableColumn(new LocalDateStringConverter()));
         //columnDataDevolucao.setCellFactory(DatePickerTableCell.forTableColumn(new LocalDateStringConverter()));

@@ -5,7 +5,7 @@ import br.edu.ifba.saj.fwads.App;
 import br.edu.ifba.saj.fwads.exception.ValidationException;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.model.Permissao;
-import br.edu.ifba.saj.fwads.service.Service;
+import br.edu.ifba.saj.fwads.service.FuncionarioService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -37,7 +37,7 @@ public class ListarFuncionarioController {
     @FXML
     private TableColumn<Funcionario, String> columnLogin;
 
-    private Service<Funcionario> funcionarioService = new Service<>(Funcionario.class);
+    private FuncionarioService funcionarioService = new FuncionarioService();
 
     @FXML
     public void initialize() {
@@ -53,7 +53,7 @@ public class ListarFuncionarioController {
     }
 
     public void loadFuncionarioList() {
-        tblFuncionario.setItems(FXCollections.observableList(new Service(Funcionario.class).findAll()));
+        tblFuncionario.setItems(FXCollections.observableList(new FuncionarioService().findAll()));
     }
 
     public void setColumnEdit() {
@@ -67,10 +67,13 @@ public class ListarFuncionarioController {
 
         columnNome.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
+            String oldValue = event.getOldValue();
             funcionario.setNome(event.getNewValue());
             try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
+                funcionario.setNome(oldValue);
+                tblFuncionario.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
 
@@ -78,10 +81,13 @@ public class ListarFuncionarioController {
 
         columnCPF.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
+            String oldValue = event.getOldValue();
             funcionario.setCpf(event.getNewValue());
             try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
+                funcionario.setCpf(oldValue);
+                tblFuncionario.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
 
@@ -89,10 +95,13 @@ public class ListarFuncionarioController {
 
         columnMatricula.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
+            String oldValue = event.getOldValue();
             funcionario.setMatricula(event.getNewValue());
             try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
+                funcionario.setMatricula(oldValue);
+                tblFuncionario.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
 
@@ -100,10 +109,13 @@ public class ListarFuncionarioController {
 
         columnEmail.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
+            String oldValue = event.getOldValue();
             funcionario.setEmail(event.getNewValue());
             try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
+                funcionario.setEmail(oldValue);
+                tblFuncionario.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
 
@@ -111,10 +123,13 @@ public class ListarFuncionarioController {
 
         columnLogin.setOnEditCommit(event -> {
             Funcionario funcionario = event.getRowValue();
+            String oldValue = event.getOldValue();
             funcionario.setLogin(event.getNewValue());
             try {
                 funcionarioService.update(funcionario);
             } catch (ValidationException e) {
+                funcionario.setLogin(oldValue);
+                tblFuncionario.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
 

@@ -71,20 +71,26 @@ public class ListarEquipamentoController {
 
         columnNumeroDeSerie.setOnEditCommit(event -> {
             Equipamento equipamento = event.getRowValue();
+            String oldValue = event.getOldValue();
             equipamento.setNumeroDeSerie(event.getNewValue());
             try {
                 equipamentoService.update(equipamento);
             } catch (ValidationException e) {
+                equipamento.setNumeroDeSerie(oldValue);
+                tblEquipamento.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
         });
 
         columnLocalizacao.setOnEditCommit(event -> {
             Equipamento equipamento = event.getRowValue();
+            String oldValue = event.getOldValue();
             equipamento.setLocalizacao(event.getNewValue());
             try {
                 equipamentoService.update(equipamento);
             } catch (ValidationException e) {
+                equipamento.setLocalizacao(oldValue);
+                tblEquipamento.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
         });
