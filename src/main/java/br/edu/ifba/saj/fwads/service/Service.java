@@ -1,13 +1,13 @@
 package br.edu.ifba.saj.fwads.service;
 
+import java.util.List;
+import java.util.Map;
+
 import br.edu.ifba.saj.fwads.exception.ValidationException;
 import br.edu.ifba.saj.fwads.model.AbstractEntity;
 import br.edu.ifba.saj.fwads.repository.Repository;
 
-import java.util.List;
-import java.util.Map;
-
-public  class Service<T extends AbstractEntity> {
+public abstract class Service<T extends AbstractEntity> {
 
     private Repository<T> repository;
 
@@ -40,9 +40,7 @@ public  class Service<T extends AbstractEntity> {
         return repository.update(entity);
     }
 
-    protected void validation(T entity) throws ValidationException {
-        
-    }
+    protected abstract void validation(T entity) throws ValidationException;
 
     public void delete(T entity) {
         repository.delete(entity);
