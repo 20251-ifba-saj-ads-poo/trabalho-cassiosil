@@ -20,11 +20,11 @@ public class Usuario extends AbstractEntity {
     @NotBlank
     @Size(min = 5)
     protected String senha;
-    
-   
+
     public String getLogin() {
         return login;
     }
+
     public void setLogin(String login) {
         this.login = login;
     }
@@ -44,11 +44,10 @@ public class Usuario extends AbstractEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
     @Override
     public String toString() {
-        return "Usuario [senha=" + senha + ", login=" + login + ", email=" + email + "]";
+        return "Usuario [" + "email= " + email + ", login= " + login + "]";
     }
-
-    
 
 }

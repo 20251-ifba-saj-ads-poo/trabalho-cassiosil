@@ -2,6 +2,7 @@
 package br.edu.ifba.saj.fwads.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,9 +26,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 public class ListarSolicitacaoController {
     @FXML
@@ -46,6 +49,7 @@ public class ListarSolicitacaoController {
 
     private ObservableList<Equipamento> equipamentosDisponiveis;
     private ObservableList<Funcionario> funcionariosDisponiveis;
+    private LocalDate localDateConverter;
 
     private SolicitacaoService solicitacaoService = new SolicitacaoService();
 
@@ -56,32 +60,51 @@ public class ListarSolicitacaoController {
         columnDataSolicitacao.setCellValueFactory(new PropertyValueFactory<>("dataSolicitacao"));
         columnDataDevolucao.setCellValueFactory(new PropertyValueFactory<>("dataDevolucao"));
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        loadSolicitacaoList();        
+        loadSolicitacaoList();
         setColumnEdit();
     }
 
-    public void loadSolicitacaoList(){
+    public void loadSolicitacaoList() {
         tblSolicitacao.setItems(FXCollections.observableList(new SolicitacaoService().findAll()));
-        
+
     }
 
-    public void setColumnEdit(){
+    public void setColumnEdit() {
         tblSolicitacao.setEditable(true);
         List<Equipamento> todosEquipamentos = new EquipamentoService().findAll();
         List<Equipamento> filtrados = todosEquipamentos.stream()
-        .filter(e -> e.getStatus() == Status.DISPONIVEL) 
-        .collect(Collectors.toList());
+                .filter(e -> e.getStatus() == Status.DISPONIVEL)
+                .collect(Collectors.toList());
         equipamentosDisponiveis = FXCollections.observableList(filtrados);
         funcionariosDisponiveis = FXCollections.observableArrayList(new FuncionarioService().findAll());
-        
+
         columnEquipamento.setCellFactory(ComboBoxTableCell.forTableColumn(equipamentosDisponiveis));
         columnFuncionario.setCellFactory(ComboBoxTableCell.forTableColumn(funcionariosDisponiveis));
 
-        //columnDataSolicitacao.setCellFactory(DatePickerTableCell.forTableColumn(new LocalDateStringConverter()));
-        //columnDataDevolucao.setCellFactory(DatePickerTableCell.forTableColumn(new LocalDateStringConverter()));
+        // columnDataSolicitacao.setCellFactory(DatePickerTableCell.forTableColumn(new
+        // LocalDateStringConverter()));
+        // columnDataDevolucao.setCellFactory(DatePickerTableCell.forTableColumn(new
+        // LocalDateStringConverter()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        StringConverter<LocalDate> localDateConverter = new StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate date) {
+                return date != null ? date.format(formatter) : "";
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                try {
+                    return LocalDate.parse(string, formatter);
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+        };
+        columnDataSolicitacao.setCellFactory(TextFieldTableCell.forTableColumn(localDateConverter));
+        columnDataDevolucao.setCellFactory(TextFieldTableCell.forTableColumn(localDateConverter));
 
         columnStatus.setCellFactory(ComboBoxTableCell.forTableColumn((StatusSolicitacao.values())));
-        
 
         columnEquipamento.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
@@ -91,7 +114,7 @@ public class ListarSolicitacaoController {
             } catch (ValidationException e) {
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
-            
+
         });
 
         columnFuncionario.setOnEditCommit(event -> {
@@ -106,20 +129,27 @@ public class ListarSolicitacaoController {
 
         columnDataSolicitacao.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
+            LocalDate oldValue = event.getOldValue();
             solicitacao.setDataSolicitacao(event.getNewValue());
             try {
                 solicitacaoService.update(solicitacao);
             } catch (ValidationException e) {
+                solicitacao.setDataSolicitacao(oldValue);
+                tblSolicitacao.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
+
         });
 
         columnDataDevolucao.setOnEditCommit(event -> {
             Solicitacao solicitacao = event.getRowValue();
+            LocalDate oldValue = event.getOldValue();
             solicitacao.setDataDevolucao(event.getNewValue());
             try {
                 solicitacaoService.update(solicitacao);
             } catch (ValidationException e) {
+                solicitacao.setDataSolicitacao(oldValue);
+                tblSolicitacao.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
         });
@@ -142,11 +172,11 @@ public class ListarSolicitacaoController {
     public void removerSolicitacao(MouseEvent event) {
         int selectedID = tblSolicitacao.getSelectionModel().getSelectedIndex();
         Solicitacao solicitacao = tblSolicitacao.getItems().get(selectedID);
-        if(selectedID >= 0){
+        if (selectedID >= 0) {
             tblSolicitacao.getItems().remove(selectedID);
             solicitacaoService.delete(solicitacao);
         }
-        
+
     }
 
     @FXML

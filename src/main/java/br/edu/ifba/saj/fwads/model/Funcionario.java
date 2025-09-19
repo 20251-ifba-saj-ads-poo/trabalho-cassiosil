@@ -1,6 +1,5 @@
 package br.edu.ifba.saj.fwads.model;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,8 +16,8 @@ public class Funcionario extends Usuario {
     @Enumerated(EnumType.ORDINAL)
     private Permissao permissao;
 
-    public Funcionario(){
-        
+    public Funcionario() {
+
     }
 
     public Funcionario(String nome, String cpf, String matricula, String senha, String login, String email) {
@@ -31,12 +30,12 @@ public class Funcionario extends Usuario {
         this.login = login;
         this.email = email;
 
-        
     }
 
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -44,6 +43,7 @@ public class Funcionario extends Usuario {
     public String getCpf() {
         return cpf;
     }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
@@ -51,6 +51,7 @@ public class Funcionario extends Usuario {
     public String getMatricula() {
         return matricula;
     }
+
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
@@ -58,14 +59,15 @@ public class Funcionario extends Usuario {
     public Permissao getPermissao() {
         return permissao;
     }
+
     public void setPermissao(Permissao permissao) {
         this.permissao = permissao;
     }
 
     @Override
     public String toString() {
-        return super.toString()+"Funcionario [nome = " + nome + ", CPF = " + cpf +
-         ", matricula = " + matricula + 
-         ", permissao = " + permissao + "]";
+        return "Funcionario [nome= " + nome + ", CPF= " + cpf +
+                ", matricula= " + matricula +
+                ", permissao= " + permissao + "]";
     }
 }

@@ -16,8 +16,8 @@ public class Equipamento extends AbstractEntity {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    public Equipamento(){
-        
+    public Equipamento() {
+
     }
 
     public Equipamento(String nome, String numeroDeSerie, String localizacao) {
@@ -30,6 +30,7 @@ public class Equipamento extends AbstractEntity {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -37,6 +38,7 @@ public class Equipamento extends AbstractEntity {
     public String getNumeroDeSerie() {
         return numeroDeSerie;
     }
+
     public void setNumeroDeSerie(String numeroDeSerie) {
         this.numeroDeSerie = numeroDeSerie;
     }
@@ -44,6 +46,7 @@ public class Equipamento extends AbstractEntity {
     public String getLocalizacao() {
         return localizacao;
     }
+
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
     }
@@ -51,15 +54,15 @@ public class Equipamento extends AbstractEntity {
     public Status getStatus() {
         return status;
     }
+
     public void alterarStatus(Status novoStatus) {
         this.status = novoStatus;
     }
 
     @Override
     public String toString() {
-        return "Equipamento [nome = " + nome + ", numero de serie = " +
-         numeroDeSerie + ", localizacao = " + localizacao + ", status = " + status + "]";
+        return "Equipamento [nome= " + nome + ", numero de serie= " +
+                numeroDeSerie + ", localizacao= " + localizacao + ", status= " + status + "]";
     }
 
-    
 }
