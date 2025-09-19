@@ -1,5 +1,6 @@
 package br.edu.ifba.saj.fwads.controller;
 
+import br.edu.ifba.saj.fwads.exception.ValidationException;
 import br.edu.ifba.saj.fwads.model.Funcionario;
 import br.edu.ifba.saj.fwads.service.FuncionarioService;
 import javafx.fxml.FXML;
@@ -49,17 +50,15 @@ public class CadFuncionarioController {
                     txLogin.getText(),
                     txEmail.getText());
         try {
-            funcionarioService.validaCad(novoFuncionario);
             funcionarioService.create(novoFuncionario);
             new Alert(AlertType.INFORMATION, 
             "Cadastrando Funcionario: "+novoFuncionario.getNome()).showAndWait();
-        } catch (Exception e) {
+            limparTela();
+        } catch (ValidationException e) {
             new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
         }
-        
-        
-        limparTela();
     }
+    
     @FXML
     private void limparTela() {
         txNome.setText("");

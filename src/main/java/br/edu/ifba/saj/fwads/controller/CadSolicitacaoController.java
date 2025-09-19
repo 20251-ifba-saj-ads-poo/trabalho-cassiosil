@@ -54,16 +54,14 @@ public class CadSolicitacaoController {
                     dtSolicitacao.getValue(), 
                     dtDevolucao.getValue());
         try {
-            solicitacaoService.validaCad(novoSolicitacao);
             solicitacaoService.create(novoSolicitacao);
             equipamentoUpdate();
             new Alert(AlertType.INFORMATION,
             "Cadastrando Solicitacao: "+novoSolicitacao.toString()).showAndWait();
+            limparTela();
         } catch (Exception e) {
             new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
-        }
-        limparTela();
-        
+        }        
     }
 
     @FXML 
@@ -117,7 +115,7 @@ public class CadSolicitacaoController {
     }
 
     private void carregarlistaEquipamentos() {
-        List<Equipamento> todosEquipamentos = new Service(Equipamento.class).findAll();
+        List<Equipamento> todosEquipamentos = new EquipamentoService().findAll();
         List<Equipamento> filtrados = todosEquipamentos.stream()
         .filter(e -> e.getStatus() == Status.DISPONIVEL) 
         .collect(Collectors.toList());

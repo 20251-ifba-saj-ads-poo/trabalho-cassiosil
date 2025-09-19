@@ -6,7 +6,6 @@ import br.edu.ifba.saj.fwads.exception.ValidationException;
 import br.edu.ifba.saj.fwads.model.Equipamento;
 import br.edu.ifba.saj.fwads.model.Status;
 import br.edu.ifba.saj.fwads.service.EquipamentoService;
-import br.edu.ifba.saj.fwads.service.Service;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -47,7 +46,7 @@ public class ListarEquipamentoController {
     }
 
     public void loadEquipamentoList() {
-        tblEquipamento.setItems(FXCollections.observableList(new Service(Equipamento.class).findAll()));
+        tblEquipamento.setItems(FXCollections.observableList(new EquipamentoService().findAll()));
     }
 
     public void setColumnEdit() {
@@ -59,11 +58,13 @@ public class ListarEquipamentoController {
 
         columnNome.setOnEditCommit(event -> {
             Equipamento equipamento = event.getRowValue();
+            String oldValue = event.getOldValue();
             equipamento.setNome(event.getNewValue());
             try {
                 equipamentoService.update(equipamento);
             } catch (ValidationException e) {
-                //event.getRowValue().setNome(event.getOldValue());
+                equipamento.setNome(oldValue);
+                tblEquipamento.refresh();
                 new Alert(AlertType.ERROR, e.getMessage()).showAndWait();
             }
         });
